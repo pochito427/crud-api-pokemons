@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import logo from './logo.svg';
 import './App.css';
+import {Table, TableContainer, TableHead, TableCell, TableBody, TableRow} from '@mui/material';
 
 const baseUrl = "pokemons.json";
 
@@ -11,9 +11,10 @@ function App() {
 
   useEffect(() => {
     axios
-      .get("pokemons.json")
+      .get(baseUrl)
       .then((response) => {
-        console.log(response.data);
+        setPokemonsData(response.data);
+        //console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -22,20 +23,28 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Nombre</TableCell>
+              <TableCell>Imagen</TableCell>
+              <TableCell>Ataque</TableCell>
+              <TableCell>Defensa</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {pokemonsData.map(pokemon=>(
+              <TableRow key={pokemon.id}>
+                <TableCell>{pokemon.name}</TableCell>
+                <TableCell>{pokemon.imgUrl}</TableCell>
+                <TableCell>{pokemon.attack}</TableCell>
+                <TableCell>{pokemon.defense}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>  
     </div>
   );
 }
