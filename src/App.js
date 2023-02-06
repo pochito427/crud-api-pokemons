@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import './App.css';
 import {Table, TableContainer, TableHead, TableCell, TableBody, TableRow} from '@mui/material';
+import {Edit, Delete} from '@mui/icons-material';
 
 const baseUrl = "pokemons.json";
 
@@ -14,7 +15,6 @@ function App() {
       .get(baseUrl)
       .then((response) => {
         setPokemonsData(response.data);
-        //console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -31,6 +31,7 @@ function App() {
               <TableCell>Imagen</TableCell>
               <TableCell>Ataque</TableCell>
               <TableCell>Defensa</TableCell>
+              <TableCell>Acciones</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -40,6 +41,11 @@ function App() {
                 <TableCell>{pokemon.imgUrl}</TableCell>
                 <TableCell>{pokemon.attack}</TableCell>
                 <TableCell>{pokemon.defense}</TableCell>
+                <TableCell>
+                  <Edit/>
+                  &nbsp;&nbsp;&nbsp;
+                  <Delete/>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
