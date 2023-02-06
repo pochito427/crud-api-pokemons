@@ -1,7 +1,25 @@
+import React, {useEffect, useState} from 'react';
+import axios from 'axios';
 import logo from './logo.svg';
 import './App.css';
 
+const baseUrl = "pokemons.json";
+
 function App() {
+
+  const [pokemonsData, setPokemonsData] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("pokemons.json")
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">

@@ -1,0 +1,65 @@
+[
+    {
+        "id": 1,  
+        "name": "Bulbasaur",
+        "imgUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+        "attack": 65,
+        "defense": 65 
+    },
+    {
+        "id": 2,  
+        "name": "Ivysaur",
+        "imgUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png",
+        "attack": 80,
+        "defense": 80 
+    },
+    {
+        "id": 3,
+        "name": "Venusaur",
+        "imgUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png",
+        "attack": 100,
+        "defense": 100 
+    },
+    {
+        "id": 4,
+        "name": "Charmander",
+        "imgUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
+        "attack": 50,
+        "defense": 60
+    },
+    {
+        "id": 5,
+        "name": "Charmeleon",
+        "imgUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/5.png",
+        "attack": 65,
+        "defense": 80
+    },
+    {
+        "id": 6,
+        "name": "Charizard",
+        "imgUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png",
+        "attack": 85,
+        "defense": 100
+    },
+    {
+        "id": 7,
+        "name": "Squirtle",
+        "imgUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png",
+        "attack": 64,
+        "defense": 50
+    },
+    {
+        "id": 8,
+        "name": "Wartortle",
+        "imgUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/8.png",
+        "attack": 80,
+        "defense": 65
+    },
+    {
+        "id": 9,
+        "name": "Blastoise",
+        "imgUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png",
+        "attack": 100,
+        "defense": 85
+    }
+  ]
