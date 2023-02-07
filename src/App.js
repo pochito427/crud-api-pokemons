@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import './App.css';
-import {Table, TableContainer, TableHead, TableCell, TableBody, TableRow, FormControl, FormGroup, Slider} from '@mui/material';
+import {Table, TableContainer, TableHead, TableCell, TableBody, TableRow, Slider, Box, Grid} from '@mui/material';
 import {Add, Close, Edit, Delete, Save} from '@mui/icons-material';
 import Avatar from '@mui/joy/Avatar';
 import Button from '@mui/joy/Button';
@@ -78,35 +78,71 @@ function App() {
         </Table>
       </TableContainer>
       <br/>
+      <div>
       {showForm ? (
-        <FormControl>
-          <h1>Nuevo Pokemon</h1>
-          <br/>
-          <FormGroup>
-            <label htmlFor="name">Nombre:</label>
-            <input id="name"/>
+        <Grid container>
+            <Grid item xs={12} sm={12} md={12}>
+              <Box>
+                <h1>Nuevo Pokemon</h1>
+              </Box>
+            </Grid>
             <br/>
-            <label htmlFor="image">Imagen:</label>
-            <input id="image" aria-describedby="my-helper-text" placeholder="url"/>
-          </FormGroup>
-          <br/>
-          <FormGroup>
-            <label htmlFor="attack">Ataque:</label>
-            <Slider id="attack" aria-label="Ataque" defaultValue={50} min={0} max={100} valueLabelDisplay="auto" marks={marks}/>
+            <Grid item xs={12} sm={6} md={6}>
+              <Box>
+                
+                <label htmlFor="name">Nombre:</label>
+                <input id="name"/>
+                
+              </Box>
+            </Grid>
             <br/>
-            <label htmlFor="defense">Defensa:</label>
-            <Slider id="defense" aria-label="Defensa" defaultValue={50} min={0} max={100} valueLabelDisplay="auto" marks={marks}/>
-          </FormGroup>
-          <br/>
-          <FormGroup>
-            <Button startDecorator={<Save/>} sx={(theme) => ({ "background-color": "#6657f7", "border-radius": 0, "color": "#ffffff" })}>Guardar</Button>
+            <Grid item xs={12} sm={6} md={6}>
+              <Box>
+                
+                <label htmlFor="attack">Ataque:</label>
+                <Slider id="attack" aria-label="Ataque" defaultValue={50} min={0} max={100} valueLabelDisplay="auto" marks={marks}/>
+                
+              </Box>  
+            </Grid>
             <br/>
-            <Button onClick={closeForm} startDecorator={<Close/>} sx={(theme) => ({ "background-color": "#6657f7", "border-radius": 0, "color": "#ffffff" })}>Cancelar</Button>
-          </FormGroup>
-        </FormControl>
+            <Grid item xs={12} sm={6} md={6}>
+              <Box>
+                
+                <label htmlFor="image">Imagen:</label>
+                <input id="image" aria-describedby="my-helper-text" placeholder="url"/>
+                
+              </Box>
+            </Grid>
+            <br/>
+            <Grid item xs={12} sm={6} md={6}>
+              <Box>
+                
+                <label htmlFor="defense">Defensa:</label>
+                <Slider id="defense" aria-label="Defensa" defaultValue={50} min={0} max={100} valueLabelDisplay="auto" marks={marks}/>
+                
+              </Box>  
+            </Grid>
+            <br/>
+            <Grid item xs={12} sm={6} md={6}>
+              <Box>
+                
+                <Button startDecorator={<Save/>} sx={(theme) => ({ "background-color": "#6657f7", "border-radius": 0, "color": "#ffffff" })}>Guardar</Button>
+                
+              </Box>
+            </Grid>
+            <Grid item xs={12} sm={6} md={6}>
+              <Box>
+                
+                <Button onClick={closeForm} startDecorator={<Close/>} sx={(theme) => ({ "background-color": "#6657f7", "border-radius": 0, "color": "#ffffff" })}>Cancelar</Button>
+                
+              </Box>
+            </Grid>
+        </Grid>
       ) : (
         <br/>  
       )}
+      </div>
+      
     </div>
   );
 }
