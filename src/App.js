@@ -68,9 +68,9 @@ function App() {
                 <TableCell>{pokemon.attack}</TableCell>
                 <TableCell>{pokemon.defense}</TableCell>
                 <TableCell>
-                  <Edit/>
+                  <Edit sx={(theme) => ({ "color": "#6657f7" })}/>
                   &nbsp;&nbsp;&nbsp;
-                  <Delete/>
+                  <Delete sx={(theme) => ({ "color": "#6657f7" })}/>
                 </TableCell>
               </TableRow>
             ))}
@@ -89,6 +89,7 @@ function App() {
             <label htmlFor="image">Imagen:</label>
             <input id="image" aria-describedby="my-helper-text" placeholder="url"/>
           </FormGroup>
+          <br/>
           <FormGroup>
             <label htmlFor="attack">Ataque:</label>
             <Slider id="attack" aria-label="Ataque" defaultValue={50} min={0} max={100} valueLabelDisplay="auto" marks={marks}/>
@@ -96,8 +97,10 @@ function App() {
             <label htmlFor="defense">Defensa:</label>
             <Slider id="defense" aria-label="Defensa" defaultValue={50} min={0} max={100} valueLabelDisplay="auto" marks={marks}/>
           </FormGroup>
+          <br/>
           <FormGroup>
             <Button startDecorator={<Save/>} sx={(theme) => ({ "background-color": "#6657f7", "border-radius": 0, "color": "#ffffff" })}>Guardar</Button>
+            <br/>
             <Button onClick={closeForm} startDecorator={<Close/>} sx={(theme) => ({ "background-color": "#6657f7", "border-radius": 0, "color": "#ffffff" })}>Cancelar</Button>
           </FormGroup>
         </FormControl>
