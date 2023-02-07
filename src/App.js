@@ -98,7 +98,7 @@ function App() {
           </FormGroup>
           <FormGroup>
             <Button startDecorator={<Save/>} sx={(theme) => ({ "background-color": "#6657f7", "border-radius": 0, "color": "#ffffff" })}>Guardar</Button>
-            <Button onClick={closeForm} startDecorator={<Close/>} sx={(theme) => ({ "background-color": "#6657f7", "border-radius": 0, "color": "#ffffff" })}>Cerrar</Button>
+            <Button onClick={closeForm} startDecorator={<Close/>} sx={(theme) => ({ "background-color": "#6657f7", "border-radius": 0, "color": "#ffffff" })}>Cancelar</Button>
           </FormGroup>
         </FormControl>
       ) : (
