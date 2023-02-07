@@ -3,6 +3,7 @@ import axios from 'axios';
 import './App.css';
 import {Table, TableContainer, TableHead, TableCell, TableBody, TableRow} from '@mui/material';
 import {Edit, Delete} from '@mui/icons-material';
+import Avatar from '@mui/joy/Avatar';
 
 const baseUrl = "pokemons.json";
 
@@ -38,7 +39,7 @@ function App() {
             {pokemonsData.map(pokemon=>(
               <TableRow key={pokemon.id}>
                 <TableCell>{pokemon.name}</TableCell>
-                <TableCell>{pokemon.imgUrl}</TableCell>
+                <TableCell><Avatar alt={pokemon.name} src={pokemon.imgUrl}/></TableCell>
                 <TableCell>{pokemon.attack}</TableCell>
                 <TableCell>{pokemon.defense}</TableCell>
                 <TableCell>
