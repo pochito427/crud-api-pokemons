@@ -24,6 +24,13 @@ function App() {
     },
   ];
 
+  const [selectedPokemon, setSelectedPokemon] = useState({
+    name: '',
+    image: '',
+    attack: 0,
+    defense: 0
+  });
+
   useEffect(() => {
     axios
       .get(baseUrl)
@@ -41,6 +48,15 @@ function App() {
 
   const closeForm = () => {
     setShowForm(false);
+  }
+
+  const handleChange = e => {
+    const {name, value} = e.target;
+    setSelectedPokemon(prevState => ({
+      ...prevState,
+      [name]: value
+    }))
+    console.log(selectedPokemon);
   }
 
   return (
@@ -91,7 +107,7 @@ function App() {
               <Box>
                 
                 <label htmlFor="name">Nombre:</label>
-                <input id="name"/>
+                <input id="name" name="name" onChange={handleChange}/>
                 
               </Box>
             </Grid>
@@ -100,7 +116,7 @@ function App() {
               <Box>
                 
                 <label htmlFor="attack">Ataque:</label>
-                <Slider id="attack" aria-label="Ataque" defaultValue={50} min={0} max={100} valueLabelDisplay="auto" marks={marks}/>
+                <Slider id="attack" name="attack" aria-label="Ataque" defaultValue={50} min={0} max={100} valueLabelDisplay="auto" marks={marks} onChange={handleChange}/>
                 
               </Box>  
             </Grid>
@@ -109,7 +125,7 @@ function App() {
               <Box>
                 
                 <label htmlFor="image">Imagen:</label>
-                <input id="image" aria-describedby="my-helper-text" placeholder="url"/>
+                <input id="image" name="image" aria-describedby="my-helper-text" placeholder="url" onChange={handleChange}/>
                 
               </Box>
             </Grid>
@@ -118,7 +134,7 @@ function App() {
               <Box>
                 
                 <label htmlFor="defense">Defensa:</label>
-                <Slider id="defense" aria-label="Defensa" defaultValue={50} min={0} max={100} valueLabelDisplay="auto" marks={marks}/>
+                <Slider id="defense" name="defense" aria-label="Defensa" defaultValue={50} min={0} max={100} valueLabelDisplay="auto" marks={marks} onChange={handleChange}/>
                 
               </Box>  
             </Grid>
