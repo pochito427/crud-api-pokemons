@@ -47,7 +47,7 @@ function App() {
       });
   }, []);
 
-
+  
   const openForm = () => {
     setShowForm(true);
   }
@@ -62,10 +62,10 @@ function App() {
       ...prevState,
       [name]: value
     }))
-    //console.log(selectedPokemon);
+    // console.log(selectedPokemon);
   }
 
-  const submitHandler = () => {
+  const submitHandler = async() => {
     const copyPokemonsData = [...pokemonsData];
     let newNextId = copyPokemonsData[copyPokemonsData.length - 1].id + 1;
     if (selectedPokemon.name !== "" && selectedPokemon.image !== "") {
@@ -74,7 +74,14 @@ function App() {
           (pokemon) => pokemon.name.toLowerCase() === selectedPokemon.name.toLowerCase()
         )
       ) {
-        setPokemonsData([...pokemonsData, { id: newNextId, name: selectedPokemon.name, image: selectedPokemon.image, attack: selectedPokemon.attack, defense: selectedPokemon.defense }]);
+        await axios.post(baseUrl, { id: newNextId, name: selectedPokemon.name, image: selectedPokemon.image, attack: selectedPokemon.attack, defense: selectedPokemon.defense, hp: 0, type: '', idAuthor: 1 })
+        .then(response=>{
+          setPokemonsData([...pokemonsData, response.data]);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+        // setPokemonsData([...pokemonsData, { id: newNextId, name: selectedPokemon.name, image: selectedPokemon.image, attack: selectedPokemon.attack, defense: selectedPokemon.defense }]);
       } else {
         alert("Este nombre está en el listado. Por favor, ingrese otro nombre diferente.");
       }
