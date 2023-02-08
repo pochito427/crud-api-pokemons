@@ -24,6 +24,7 @@ function App() {
     },
   ];
 
+  
   const [selectedPokemon, setSelectedPokemon] = useState({
     name: '',
     image: '',
@@ -42,6 +43,7 @@ function App() {
       });
   }, []);
 
+
   const openForm = () => {
     setShowForm(true);
   }
@@ -56,7 +58,25 @@ function App() {
       ...prevState,
       [name]: value
     }))
-    console.log(selectedPokemon);
+    //console.log(selectedPokemon);
+  }
+
+  const submitHandler = () => {
+    const copyPokemonsData = [...pokemonsData];
+    let newNextId = copyPokemonsData[copyPokemonsData.length - 1].id + 1;
+    if (selectedPokemon.name !== "" && selectedPokemon.image !== "") {
+      if (
+        !pokemonsData.some(
+          (pokemon) => pokemon.name.toLowerCase() === selectedPokemon.name.toLowerCase()
+        )
+      ) {
+        setPokemonsData([...pokemonsData, { id: newNextId, name: selectedPokemon.name, imgUrl: selectedPokemon.image, attack: selectedPokemon.attack, defense: selectedPokemon.defense }]);
+      } else {
+        alert("Este nombre está en el listado. Por favor, ingrese otro nombre diferente.");
+      }
+    } else {
+      alert("Usted no debe ingresar nombres o imágenes vacíos.");
+    }
   }
 
   return (
@@ -142,7 +162,7 @@ function App() {
             <Grid item xs={12} sm={6} md={6}>
               <Box>
                 
-                <Button startDecorator={<Save/>} sx={(theme) => ({ "background-color": "#6657f7", "border-radius": 0, "color": "#ffffff" })}>Guardar</Button>
+                <Button onClick={submitHandler} startDecorator={<Save/>} sx={(theme) => ({ "background-color": "#6657f7", "border-radius": 0, "color": "#ffffff" })}>Guardar</Button>
                 
               </Box>
             </Grid>
