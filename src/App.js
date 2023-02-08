@@ -6,7 +6,7 @@ import {Add, Close, Edit, Delete, Save} from '@mui/icons-material';
 import Avatar from '@mui/joy/Avatar';
 import Button from '@mui/joy/Button';
 
-const baseUrl = "pokemons.json";
+const baseUrl = "https://tribu-ti-staffing-desarrollo-afangwbmcrhucqfh.z01.azurefd.net/pkm-msa-evaluation/pokemon";
 
 function App() {
 
@@ -34,7 +34,11 @@ function App() {
 
   useEffect(() => {
     axios
-      .get(baseUrl)
+      .get(baseUrl,{
+        params: {
+          idAuthor: 1
+        }
+      })
       .then((response) => {
         setPokemonsData(response.data);
       })
@@ -70,7 +74,7 @@ function App() {
           (pokemon) => pokemon.name.toLowerCase() === selectedPokemon.name.toLowerCase()
         )
       ) {
-        setPokemonsData([...pokemonsData, { id: newNextId, name: selectedPokemon.name, imgUrl: selectedPokemon.image, attack: selectedPokemon.attack, defense: selectedPokemon.defense }]);
+        setPokemonsData([...pokemonsData, { id: newNextId, name: selectedPokemon.name, image: selectedPokemon.image, attack: selectedPokemon.attack, defense: selectedPokemon.defense }]);
       } else {
         alert("Este nombre está en el listado. Por favor, ingrese otro nombre diferente.");
       }
@@ -100,7 +104,7 @@ function App() {
             {pokemonsData.map(pokemon=>(
               <TableRow key={pokemon.id}>
                 <TableCell>{pokemon.name}</TableCell>
-                <TableCell><Avatar alt={pokemon.name} src={pokemon.imgUrl}/></TableCell>
+                <TableCell><Avatar alt={pokemon.name} src={pokemon.image}/></TableCell>
                 <TableCell>{pokemon.attack}</TableCell>
                 <TableCell>{pokemon.defense}</TableCell>
                 <TableCell>
