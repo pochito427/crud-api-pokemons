@@ -6,8 +6,8 @@ import {Add, Close, Edit, Delete, Save, Search, Clear} from '@mui/icons-material
 import Avatar from '@mui/joy/Avatar';
 import Button from '@mui/joy/Button';
 
-// const baseUrl = "https://tribu-ti-staffing-desarrollo-afangwbmcrhucqfh.z01.azurefd.net/pkm-msa-evaluation/pokemon";
-const baseUrl = "pokemons.json";
+const baseUrl = "https://tribu-ti-staffing-desarrollo-afangwbmcrhucqfh.z01.azurefd.net/pkm-msa-evaluation/pokemon";
+// const baseUrl = "pokemons.json";
 
 function App() {
 
