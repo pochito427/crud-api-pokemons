@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import './App.css';
-import {Table, TableContainer, TableHead, TableCell, TableBody, TableRow, Slider, Box, Grid} from '@mui/material';
+import {Table, TableContainer, TableHead, TableCell, TableBody, TableRow, Slider, Box, Grid, Modal} from '@mui/material';
 import {Add, Close, Edit, Delete, Save} from '@mui/icons-material';
 import Avatar from '@mui/joy/Avatar';
 import Button from '@mui/joy/Button';
@@ -13,6 +13,7 @@ function App() {
   const [pokemonsData, setPokemonsData] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
+  const [showModalDelete, setShowModalDelete] = useState(false);
 
   const marks = [
     {
@@ -35,6 +36,18 @@ function App() {
     type: '',
     idAuthor: 1
   });
+
+  const styleModal = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
 
   useEffect(() => {
     axios
@@ -67,6 +80,15 @@ function App() {
 
   const closeEditForm = () => {
     setShowEditForm(false);
+  }
+
+  const openModalDelete = (pokemon) => {
+    setSelectedPokemon(pokemon);
+    setShowModalDelete(true);
+  }
+
+  const closeModalDelete = () => {
+    setShowModalDelete(false);
   }
 
   const handleChange = e => {
@@ -139,6 +161,17 @@ function App() {
     }
   }
 
+  const submitDeleteHandler = async() => {
+    await axios.delete(baseUrl+'/'+selectedPokemon.id)
+    .then(response => {
+      setPokemonsData(pokemonsData.filter(pokemon=>pokemon.id!==selectedPokemon.id));
+      closeModalDelete();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
+
   return (
     <div className="App">
       <h1>Listado de Pokemon</h1>
@@ -166,7 +199,7 @@ function App() {
                 <TableCell>
                   <Edit sx={(theme) => ({ "color": "#6657f7" })} onClick={() => openEditForm(pokemon)}/>
                   &nbsp;&nbsp;&nbsp;
-                  <Delete sx={(theme) => ({ "color": "#6657f7" })}/>
+                  <Delete sx={(theme) => ({ "color": "#6657f7" })} onClick={() => openModalDelete(pokemon)}/>
                 </TableCell>
               </TableRow>
             ))}
@@ -301,6 +334,20 @@ function App() {
       ) : (
         <br/>  
       )}
+      </div>
+      <div>
+        <Modal open={showModalDelete} onClose={() => closeModalDelete()}>
+          <Box sx={styleModal}>
+            <div>
+              <p>¿Está seguro que desea eliminar el Pokemon <b>{selectedPokemon && selectedPokemon.name}</b>?</p>
+            </div>
+            <div>
+              <Button color="secondary" onClick={() => submitDeleteHandler()}>Sí</Button>
+              <br/>
+              <Button onClick={() => closeModalDelete()}>No</Button>
+            </div>
+          </Box>  
+        </Modal>
       </div>
     </div>
   );
