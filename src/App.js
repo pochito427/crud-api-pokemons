@@ -12,6 +12,7 @@ function App() {
 
   const [pokemonsData, setPokemonsData] = useState([]);
   const [showForm, setShowForm] = useState(false);
+  const [showEditForm, setShowEditForm] = useState(false);
 
   const marks = [
     {
@@ -29,7 +30,10 @@ function App() {
     name: '',
     image: '',
     attack: 0,
-    defense: 0
+    defense: 0,
+    hp: 0,
+    type: '',
+    idAuthor: 1
   });
 
   useEffect(() => {
@@ -56,16 +60,25 @@ function App() {
     setShowForm(false);
   }
 
+  const openEditForm = (pokemon) => {
+    setSelectedPokemon(pokemon);
+    setShowEditForm(true);
+  }
+
+  const closeEditForm = () => {
+    setShowEditForm(false);
+  }
+
   const handleChange = e => {
     const {name, value} = e.target;
     setSelectedPokemon(prevState => ({
       ...prevState,
       [name]: value
     }))
-    // console.log(selectedPokemon);
+    console.log(selectedPokemon);
   }
 
-  const submitHandler = async() => {
+  const submitPostHandler = async() => {
     const copyPokemonsData = [...pokemonsData];
     let newNextId = copyPokemonsData[copyPokemonsData.length - 1].id + 1;
     if (selectedPokemon.name !== "" && selectedPokemon.image !== "") {
@@ -74,14 +87,50 @@ function App() {
           (pokemon) => pokemon.name.toLowerCase() === selectedPokemon.name.toLowerCase()
         )
       ) {
-        await axios.post(baseUrl, { id: newNextId, name: selectedPokemon.name, image: selectedPokemon.image, attack: selectedPokemon.attack, defense: selectedPokemon.defense, hp: 0, type: '', idAuthor: 1 })
+        await axios.post(baseUrl, { id: newNextId, name: selectedPokemon.name, image: selectedPokemon.image, attack: selectedPokemon.attack, defense: selectedPokemon.defense, hp: selectedPokemon.hp, type: selectedPokemon.type, idAuthor: selectedPokemon.idAuthor })
         .then(response=>{
           setPokemonsData([...pokemonsData, response.data]);
+          closeForm();
         })
         .catch((error) => {
           console.log(error);
         });
         // setPokemonsData([...pokemonsData, { id: newNextId, name: selectedPokemon.name, image: selectedPokemon.image, attack: selectedPokemon.attack, defense: selectedPokemon.defense }]);
+      } else {
+        alert("Este nombre está en el listado. Por favor, ingrese otro nombre diferente.");
+      }
+    } else {
+      alert("Usted no debe ingresar nombres o imágenes vacíos.");
+    }
+  }
+
+  const submitPutHandler = async() => {
+    const copyPokemonsData = [...pokemonsData];
+    if (selectedPokemon.name !== "" && selectedPokemon.image !== "") {
+      if (
+        !pokemonsData.some(
+          (pokemon) => pokemon.name.toLowerCase() === selectedPokemon.name.toLowerCase()
+        )
+      ) {
+        await axios.put(baseUrl+'/'+selectedPokemon.id, selectedPokemon)
+        .then(response=>{
+          copyPokemonsData.map(pokemon => {
+            if(pokemon.id === selectedPokemon.id){
+              pokemon.name = selectedPokemon.name;
+              pokemon.image = selectedPokemon.image;
+              pokemon.attack = selectedPokemon.attack;
+              pokemon.defense = selectedPokemon.defense;
+              pokemon.hp = selectedPokemon.hp;
+              pokemon.type = selectedPokemon.type;
+              pokemon.idAuthor = selectedPokemon.idAuthor
+            }
+          })
+          setPokemonsData(copyPokemonsData);
+          closeEditForm();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
       } else {
         alert("Este nombre está en el listado. Por favor, ingrese otro nombre diferente.");
       }
@@ -115,7 +164,7 @@ function App() {
                 <TableCell>{pokemon.attack}</TableCell>
                 <TableCell>{pokemon.defense}</TableCell>
                 <TableCell>
-                  <Edit sx={(theme) => ({ "color": "#6657f7" })}/>
+                  <Edit sx={(theme) => ({ "color": "#6657f7" })} onClick={() => openEditForm(pokemon)}/>
                   &nbsp;&nbsp;&nbsp;
                   <Delete sx={(theme) => ({ "color": "#6657f7" })}/>
                 </TableCell>
@@ -173,7 +222,7 @@ function App() {
             <Grid item xs={12} sm={6} md={6}>
               <Box>
                 
-                <Button onClick={submitHandler} startDecorator={<Save/>} sx={(theme) => ({ "background-color": "#6657f7", "border-radius": 0, "color": "#ffffff" })}>Guardar</Button>
+                <Button onClick={submitPostHandler} startDecorator={<Save/>} sx={(theme) => ({ "background-color": "#6657f7", "border-radius": 0, "color": "#ffffff" })}>Guardar</Button>
                 
               </Box>
             </Grid>
@@ -189,7 +238,70 @@ function App() {
         <br/>  
       )}
       </div>
-      
+      <div>
+      {showEditForm ? (
+        <Grid container>
+            <Grid item xs={12} sm={12} md={12}>
+              <Box>
+                <h1>Actualizar Pokemon</h1>
+              </Box>
+            </Grid>
+            <br/>
+            <Grid item xs={12} sm={6} md={6}>
+              <Box>
+                
+                <label htmlFor="name">Nombre:</label>
+                <input id="name" name="name" onChange={handleChange} value={selectedPokemon && selectedPokemon.name}/>
+                
+              </Box>
+            </Grid>
+            <br/>
+            <Grid item xs={12} sm={6} md={6}>
+              <Box>
+                
+                <label htmlFor="attack">Ataque:</label>
+                <Slider id="attack" name="attack" aria-label="Ataque" defaultValue={50} min={0} max={100} valueLabelDisplay="auto" marks={marks} onChange={handleChange} value={selectedPokemon && selectedPokemon.attack}/>
+                
+              </Box>  
+            </Grid>
+            <br/>
+            <Grid item xs={12} sm={6} md={6}>
+              <Box>
+                
+                <label htmlFor="image">Imagen:</label>
+                <input id="image" name="image" aria-describedby="my-helper-text" placeholder="url" onChange={handleChange} value={selectedPokemon && selectedPokemon.image}/>
+                
+              </Box>
+            </Grid>
+            <br/>
+            <Grid item xs={12} sm={6} md={6}>
+              <Box>
+                
+                <label htmlFor="defense">Defensa:</label>
+                <Slider id="defense" name="defense" aria-label="Defensa" defaultValue={50} min={0} max={100} valueLabelDisplay="auto" marks={marks} onChange={handleChange} value={selectedPokemon && selectedPokemon.defense}/>
+                
+              </Box>  
+            </Grid>
+            <br/>
+            <Grid item xs={12} sm={6} md={6}>
+              <Box>
+                
+                <Button onClick={submitPutHandler} startDecorator={<Save/>} sx={(theme) => ({ "background-color": "#6657f7", "border-radius": 0, "color": "#ffffff" })}>Guardar</Button>
+                
+              </Box>
+            </Grid>
+            <Grid item xs={12} sm={6} md={6}>
+              <Box>
+                
+                <Button onClick={closeEditForm} startDecorator={<Close/>} sx={(theme) => ({ "background-color": "#6657f7", "border-radius": 0, "color": "#ffffff" })}>Cancelar</Button>
+                
+              </Box>
+            </Grid>
+        </Grid>
+      ) : (
+        <br/>  
+      )}
+      </div>
     </div>
   );
 }
