@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import './App.css';
-import {Table, TableContainer, TableHead, TableCell, TableBody, TableRow, Slider, Box, Grid, Modal} from '@mui/material';
-import {Add, Close, Edit, Delete, Save} from '@mui/icons-material';
+import {Table, TableContainer, TableHead, TableCell, TableBody, TableRow, Slider, Box, Grid, Modal, TextField, InputAdornment} from '@mui/material';
+import {Add, Close, Edit, Delete, Save, Search, Clear} from '@mui/icons-material';
 import Avatar from '@mui/joy/Avatar';
 import Button from '@mui/joy/Button';
 
-const baseUrl = "https://tribu-ti-staffing-desarrollo-afangwbmcrhucqfh.z01.azurefd.net/pkm-msa-evaluation/pokemon";
+// const baseUrl = "https://tribu-ti-staffing-desarrollo-afangwbmcrhucqfh.z01.azurefd.net/pkm-msa-evaluation/pokemon";
+const baseUrl = "pokemons.json";
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
   const [showForm, setShowForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const [showModalDelete, setShowModalDelete] = useState(false);
+  const [showClearIcon, setShowClearIcon] = useState("none");
 
   const marks = [
     {
@@ -97,8 +99,17 @@ function App() {
       ...prevState,
       [name]: value
     }))
-    console.log(selectedPokemon);
+    // console.log(selectedPokemon);
   }
+
+  const handleChangeSearch = e => {
+    setShowClearIcon(e.target.value === "" ? "none" : "flex");
+  }
+
+  const handleClickClear = () => {
+    // TODO: Clear the search input
+    console.log("clicked the clear icon...");
+  };
 
   const submitPostHandler = async() => {
     const copyPokemonsData = [...pokemonsData];
@@ -176,17 +187,53 @@ function App() {
     <div className="App">
       <h1>Listado de Pokemon</h1>
       <br/>
-      <Button onClick={openForm} startDecorator={<Add />} sx={(theme) => ({ "background-color": "#6657f7", "border-radius": 0, "color": "#ffffff" })}>Nuevo</Button>
+      <div>
+        <Grid container>
+            <Grid item xs={12} sm={6} md={6}>
+              <Box>
+                <TextField
+                  size="small"
+                  variant="outlined"
+                  placeholder="Buscar"
+                  onChange={handleChangeSearch}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Search />
+                      </InputAdornment>
+                    ),
+                    endAdornment: (
+                      <InputAdornment
+                        position="end"
+                        style={{ display: showClearIcon }}
+                        onClick={handleClickClear}
+                      >
+                        <Clear />
+                      </InputAdornment>
+                    )
+                  }}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12} sm={6} md={6}><Box>&nbsp;&nbsp;&nbsp;</Box></Grid>
+            <Grid item xs={12} sm={6} md={6}><Box>&nbsp;&nbsp;&nbsp;</Box></Grid>
+            <Grid item xs={12} sm={6} md={6}>
+              <Box>
+                <Button onClick={openForm} startDecorator={<Add />} sx={(theme) => ({ "background-color": "#6657f7", "border-radius": 0, "color": "#ffffff" })}>Nuevo</Button>
+              </Box>
+            </Grid>
+        </Grid>
+      </div>
       <br/>
       <TableContainer>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Nombre</TableCell>
-              <TableCell>Imagen</TableCell> 
-              <TableCell>Ataque</TableCell>
-              <TableCell>Defensa</TableCell>
-              <TableCell>Acciones</TableCell>
+              <TableCell><b>Nombre</b></TableCell>
+              <TableCell><b>Imagen</b></TableCell> 
+              <TableCell><b>Ataque</b></TableCell>
+              <TableCell><b>Defensa</b></TableCell>
+              <TableCell><b>Acciones</b></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -229,7 +276,7 @@ function App() {
               <Box>
                 
                 <label htmlFor="attack">Ataque:</label>
-                <Slider id="attack" name="attack" aria-label="Ataque" defaultValue={50} min={0} max={100} valueLabelDisplay="auto" marks={marks} onChange={handleChange}/>
+                <Slider id="attack" name="attack" aria-label="Ataque" defaultValue={50} min={0} max={100} valueLabelDisplay="auto" marks={marks} onChange={handleChange} sx={(theme) => ({ "color": "#6657f7" })}/>
                 
               </Box>  
             </Grid>
@@ -247,7 +294,7 @@ function App() {
               <Box>
                 
                 <label htmlFor="defense">Defensa:</label>
-                <Slider id="defense" name="defense" aria-label="Defensa" defaultValue={50} min={0} max={100} valueLabelDisplay="auto" marks={marks} onChange={handleChange}/>
+                <Slider id="defense" name="defense" aria-label="Defensa" defaultValue={50} min={0} max={100} valueLabelDisplay="auto" marks={marks} onChange={handleChange} sx={(theme) => ({ "color": "#6657f7" })}/>
                 
               </Box>  
             </Grid>
