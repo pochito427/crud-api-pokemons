@@ -176,6 +176,7 @@ function App() {
             }
           })
           setPokemonsData(copyPokemonsData);
+          handleClickClear();
           closeEditForm();
         })
         .catch((error) => {
@@ -193,6 +194,7 @@ function App() {
     await axios.delete(baseUrl+'/'+selectedPokemon.id)
     .then(response => {
       setPokemonsData(pokemonsData.filter(pokemon=>pokemon.id!==selectedPokemon.id));
+      handleClickClear(); 
       closeModalDelete();
     })
     .catch((error) => {
