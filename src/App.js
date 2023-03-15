@@ -16,6 +16,8 @@ function App() {
   const [showEditForm, setShowEditForm] = useState(false);
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [showClearIcon, setShowClearIcon] = useState("none");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredPokemon, setFilteredPokemon] = useState({});
 
   const marks = [
     {
@@ -51,6 +53,10 @@ function App() {
     p: 4,
   };
 
+  const isObjectEmpty = (objectName) => {
+    return Object.keys(objectName).length === 0 && objectName.constructor === Object;
+  }
+
   useEffect(() => {
     axios
       .get(baseUrl,{
@@ -64,7 +70,7 @@ function App() {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [pokemonsData]);
 
   
   const openForm = () => {
@@ -104,11 +110,22 @@ function App() {
 
   const handleChangeSearch = e => {
     setShowClearIcon(e.target.value === "" ? "none" : "flex");
+    setSearchQuery(e.target.value);
+    if(searchQuery !== ""){
+      axios
+      .get(baseUrl+'/'+searchQuery)
+      .then((response) => {
+        setFilteredPokemon(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    }
   }
 
   const handleClickClear = () => {
-    // TODO: Clear the search input
-    console.log("clicked the clear icon...");
+    setSearchQuery("");
+    setFilteredPokemon({});
   };
 
   const submitPostHandler = async() => {
@@ -196,6 +213,7 @@ function App() {
                   variant="outlined"
                   placeholder="Buscar"
                   onChange={handleChangeSearch}
+                  value={searchQuery}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -237,19 +255,33 @@ function App() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {pokemonsData.map(pokemon=>(
-              <TableRow key={pokemon.id}>
-                <TableCell>{pokemon.name}</TableCell>
-                <TableCell><Avatar alt={pokemon.name} src={pokemon.image}/></TableCell>
-                <TableCell>{pokemon.attack}</TableCell>
-                <TableCell>{pokemon.defense}</TableCell>
-                <TableCell>
-                  <Edit sx={(theme) => ({ "color": "#6657f7" })} onClick={() => openEditForm(pokemon)}/>
-                  &nbsp;&nbsp;&nbsp;
-                  <Delete sx={(theme) => ({ "color": "#6657f7" })} onClick={() => openModalDelete(pokemon)}/>
-                </TableCell>
+            {isObjectEmpty(filteredPokemon) ? (
+              pokemonsData.map(pokemon=>(
+                <TableRow key={pokemon.id}>
+                  <TableCell>{pokemon.name}</TableCell>
+                  <TableCell><Avatar alt={pokemon.name} src={pokemon.image}/></TableCell>
+                  <TableCell>{pokemon.attack}</TableCell>
+                  <TableCell>{pokemon.defense}</TableCell>
+                  <TableCell>
+                    <Edit sx={(theme) => ({ "color": "#6657f7" })} onClick={() => openEditForm(pokemon)}/>
+                    &nbsp;&nbsp;&nbsp;
+                    <Delete sx={(theme) => ({ "color": "#6657f7" })} onClick={() => openModalDelete(pokemon)}/>
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow key={filteredPokemon.id}>
+                  <TableCell>{filteredPokemon.name}</TableCell>
+                  <TableCell><Avatar alt={filteredPokemon.name} src={filteredPokemon.image}/></TableCell>
+                  <TableCell>{filteredPokemon.attack}</TableCell>
+                  <TableCell>{filteredPokemon.defense}</TableCell>
+                  <TableCell>
+                    <Edit sx={(theme) => ({ "color": "#6657f7" })} onClick={() => openEditForm(filteredPokemon)}/>
+                    &nbsp;&nbsp;&nbsp;
+                    <Delete sx={(theme) => ({ "color": "#6657f7" })} onClick={() => openModalDelete(filteredPokemon)}/>
+                  </TableCell>
               </TableRow>
-            ))}
+            )}
           </TableBody>
         </Table>
       </TableContainer>
