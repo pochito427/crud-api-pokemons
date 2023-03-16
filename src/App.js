@@ -249,6 +249,7 @@ function App() {
         <Table>
           <TableHead>
             <TableRow>
+            <TableCell><b>ID</b></TableCell>
               <TableCell><b>Nombre</b></TableCell>
               <TableCell><b>Imagen</b></TableCell> 
               <TableCell><b>Ataque</b></TableCell>
@@ -260,6 +261,7 @@ function App() {
             {isObjectEmpty(filteredPokemon) ? (
               pokemonsData.map(pokemon=>(
                 <TableRow key={pokemon.id}>
+                  <TableCell>{pokemon.id}</TableCell>
                   <TableCell>{pokemon.name}</TableCell>
                   <TableCell><Avatar alt={pokemon.name} src={pokemon.image}/></TableCell>
                   <TableCell>{pokemon.attack}</TableCell>
@@ -273,6 +275,7 @@ function App() {
               ))
             ) : (
               <TableRow key={filteredPokemon.id}>
+                  <TableCell>{filteredPokemon.id}</TableCell>
                   <TableCell>{filteredPokemon.name}</TableCell>
                   <TableCell><Avatar alt={filteredPokemon.name} src={filteredPokemon.image}/></TableCell>
                   <TableCell>{filteredPokemon.attack}</TableCell>
