@@ -5,6 +5,7 @@ import {Table, TableContainer, TableHead, TableCell, TableBody, TableRow, Slider
 import {Add, Close, Edit, Delete, Save, Search, Clear} from '@mui/icons-material';
 import Avatar from '@mui/joy/Avatar';
 import Button from '@mui/joy/Button';
+import CustomForm from './components/CustomForm/CustomForm';
 
 const baseUrl = "https://tribu-ti-staffing-desarrollo-afangwbmcrhucqfh.z01.azurefd.net/pkm-msa-evaluation/pokemon";
 // const baseUrl = "pokemons.json";
@@ -293,128 +294,14 @@ function App() {
       <br/>
       <div>
       {showForm ? (
-        <Grid container>
-            <Grid item xs={12} sm={12} md={12}>
-              <Box>
-                <h1>Nuevo Pokemon</h1>
-              </Box>
-            </Grid>
-            <br/>
-            <Grid item xs={12} sm={6} md={6}>
-              <Box>
-                
-                <label htmlFor="name">Nombre:</label>
-                <input id="name" name="name" onChange={handleChange}/>
-                
-              </Box>
-            </Grid>
-            <br/>
-            <Grid item xs={12} sm={6} md={6}>
-              <Box>
-                
-                <label htmlFor="attack">Ataque:</label>
-                <Slider id="attack" name="attack" aria-label="Ataque" defaultValue={50} min={0} max={100} valueLabelDisplay="auto" marks={marks} onChange={handleChange} sx={(theme) => ({ "color": "#6657f7" })}/>
-                
-              </Box>  
-            </Grid>
-            <br/>
-            <Grid item xs={12} sm={6} md={6}>
-              <Box>
-                
-                <label htmlFor="image">Imagen:</label>
-                <input id="image" name="image" aria-describedby="my-helper-text" placeholder="url" onChange={handleChange}/>
-                
-              </Box>
-            </Grid>
-            <br/>
-            <Grid item xs={12} sm={6} md={6}>
-              <Box>
-                
-                <label htmlFor="defense">Defensa:</label>
-                <Slider id="defense" name="defense" aria-label="Defensa" defaultValue={50} min={0} max={100} valueLabelDisplay="auto" marks={marks} onChange={handleChange} sx={(theme) => ({ "color": "#6657f7" })}/>
-                
-              </Box>  
-            </Grid>
-            <br/>
-            <Grid item xs={12} sm={6} md={6}>
-              <Box>
-                
-                <Button onClick={submitPostHandler} startDecorator={<Save/>} sx={(theme) => ({ "background-color": "#6657f7", "border-radius": 0, "color": "#ffffff" })}>Guardar</Button>
-                
-              </Box>
-            </Grid>
-            <Grid item xs={12} sm={6} md={6}>
-              <Box>
-                
-                <Button onClick={closeForm} startDecorator={<Close/>} sx={(theme) => ({ "background-color": "#6657f7", "border-radius": 0, "color": "#ffffff" })}>Cancelar</Button>
-                
-              </Box>
-            </Grid>
-        </Grid>
+        <CustomForm title="Nuevo Pokemon" onChangeHandler={handleChange} submitCustomHandler={submitPostHandler}  closeCustomForm={closeForm} customMarks={marks} />
       ) : (
         <br/>  
       )}
       </div>
       <div>
       {showEditForm ? (
-        <Grid container>
-            <Grid item xs={12} sm={12} md={12}>
-              <Box>
-                <h1>Actualizar Pokemon</h1>
-              </Box>
-            </Grid>
-            <br/>
-            <Grid item xs={12} sm={6} md={6}>
-              <Box>
-                
-                <label htmlFor="name">Nombre:</label>
-                <input id="name" name="name" onChange={handleChange} value={selectedPokemon && selectedPokemon.name}/>
-                
-              </Box>
-            </Grid>
-            <br/>
-            <Grid item xs={12} sm={6} md={6}>
-              <Box>
-                
-                <label htmlFor="attack">Ataque:</label>
-                <Slider id="attack" name="attack" aria-label="Ataque" defaultValue={50} min={0} max={100} valueLabelDisplay="auto" marks={marks} onChange={handleChange} value={selectedPokemon && selectedPokemon.attack}/>
-                
-              </Box>  
-            </Grid>
-            <br/>
-            <Grid item xs={12} sm={6} md={6}>
-              <Box>
-                
-                <label htmlFor="image">Imagen:</label>
-                <input id="image" name="image" aria-describedby="my-helper-text" placeholder="url" onChange={handleChange} value={selectedPokemon && selectedPokemon.image}/>
-                
-              </Box>
-            </Grid>
-            <br/>
-            <Grid item xs={12} sm={6} md={6}>
-              <Box>
-                
-                <label htmlFor="defense">Defensa:</label>
-                <Slider id="defense" name="defense" aria-label="Defensa" defaultValue={50} min={0} max={100} valueLabelDisplay="auto" marks={marks} onChange={handleChange} value={selectedPokemon && selectedPokemon.defense}/>
-                
-              </Box>  
-            </Grid>
-            <br/>
-            <Grid item xs={12} sm={6} md={6}>
-              <Box>
-                
-                <Button onClick={submitPutHandler} startDecorator={<Save/>} sx={(theme) => ({ "background-color": "#6657f7", "border-radius": 0, "color": "#ffffff" })}>Guardar</Button>
-                
-              </Box>
-            </Grid>
-            <Grid item xs={12} sm={6} md={6}>
-              <Box>
-                
-                <Button onClick={closeEditForm} startDecorator={<Close/>} sx={(theme) => ({ "background-color": "#6657f7", "border-radius": 0, "color": "#ffffff" })}>Cancelar</Button>
-                
-              </Box>
-            </Grid>
-        </Grid>
+        <CustomForm title="Actualizar Pokemon" onChangeHandler={handleChange} submitCustomHandler={submitPutHandler}  closeCustomForm={closeEditForm} customMarks={marks} customSelectedElement={selectedPokemon} />
       ) : (
         <br/>  
       )}

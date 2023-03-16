@@ -3,14 +3,14 @@ import {Slider, Box, Grid} from '@mui/material';
 import {Close, Save} from '@mui/icons-material';
 import Button from '@mui/joy/Button';
 
-function CustomForm(
+function CustomForm({
     title = "", 
     onChangeHandler = () => {}, 
     submitCustomHandler = () => {}, 
     closeCustomForm = () => {}, 
     customMarks = [], 
     customSelectedElement = {}, 
-    ...props){
+    ...props}){
 
     return (
         <Grid container>
