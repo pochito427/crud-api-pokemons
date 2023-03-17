@@ -7,6 +7,7 @@ import Avatar from '@mui/joy/Avatar';
 import Button from '@mui/joy/Button';
 import CustomForm from './components/CustomForm/CustomForm';
 import CustomModal from './components/CustomModal/CustomModal';
+import CustomSearch from './components/CustomSearch/CustomSearch';
 
 const baseUrl = "https://tribu-ti-staffing-desarrollo-afangwbmcrhucqfh.z01.azurefd.net/pkm-msa-evaluation/pokemon";
 // const baseUrl = "pokemons.json";
@@ -212,29 +213,7 @@ function App() {
         <Grid container>
             <Grid item xs={12} sm={6} md={6}>
               <Box>
-                <TextField
-                  size="small"
-                  variant="outlined"
-                  placeholder="Buscar"
-                  onChange={handleChangeSearch}
-                  value={searchQuery}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Search />
-                      </InputAdornment>
-                    ),
-                    endAdornment: (
-                      <InputAdornment
-                        position="end"
-                        style={{ display: showClearIcon }}
-                        onClick={handleClickClear}
-                      >
-                        <Clear />
-                      </InputAdornment>
-                    )
-                  }}
-                />
+                <CustomSearch customSize="small" customPlaceholder="Buscar" onChangeHandler={handleChangeSearch} customValue={searchQuery} customClearIcon={showClearIcon} onClearHandler={handleClickClear} />
               </Box>
             </Grid>
             <Grid item xs={12} sm={6} md={6}><Box>&nbsp;&nbsp;&nbsp;</Box></Grid>
@@ -251,7 +230,7 @@ function App() {
         <Table>
           <TableHead>
             <TableRow>
-            <TableCell><b>ID</b></TableCell>
+              <TableCell><b>ID</b></TableCell>
               <TableCell><b>Nombre</b></TableCell>
               <TableCell><b>Imagen</b></TableCell> 
               <TableCell><b>Ataque</b></TableCell>
