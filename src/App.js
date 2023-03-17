@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import './App.css';
-import {Table, TableContainer, TableHead, TableCell, TableBody, TableRow, Slider, Box, Grid, Modal, TextField, InputAdornment} from '@mui/material';
-import {Add, Close, Edit, Delete, Save, Search, Clear} from '@mui/icons-material';
+import {Table, TableContainer, TableHead, TableCell, TableBody, TableRow, Box, Grid} from '@mui/material';
+import {Add, Edit, Delete} from '@mui/icons-material';
 import Avatar from '@mui/joy/Avatar';
 import Button from '@mui/joy/Button';
 import CustomForm from './components/CustomForm/CustomForm';
@@ -12,6 +12,7 @@ import { getMarks } from './utils/getMarks';
 import { isObjectEmpty } from './utils/isObjectEmpty';
 
 const baseUrl = "https://tribu-ti-staffing-desarrollo-afangwbmcrhucqfh.z01.azurefd.net/pkm-msa-evaluation/pokemon";
+// comment line above and uncomment line below to load mock data
 // const baseUrl = "pokemons.json";
 
 function App() {
