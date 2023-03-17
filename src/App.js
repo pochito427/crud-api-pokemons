@@ -8,11 +8,15 @@ import Button from '@mui/joy/Button';
 import CustomForm from './components/CustomForm/CustomForm';
 import CustomModal from './components/CustomModal/CustomModal';
 import CustomSearch from './components/CustomSearch/CustomSearch';
+import { getMarks } from './utils/getMarks';
+import { isObjectEmpty } from './utils/isObjectEmpty';
 
 const baseUrl = "https://tribu-ti-staffing-desarrollo-afangwbmcrhucqfh.z01.azurefd.net/pkm-msa-evaluation/pokemon";
 // const baseUrl = "pokemons.json";
 
 function App() {
+
+  // States of the application
 
   const [pokemonsData, setPokemonsData] = useState([]);
   const [showForm, setShowForm] = useState(false);
@@ -22,18 +26,7 @@ function App() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredPokemon, setFilteredPokemon] = useState({});
 
-  const marks = [
-    {
-      value: 0,
-      label: '0',
-    },
-    {
-      value: 100,
-      label: '100',
-    },
-  ];
-
-  
+ 
   const [selectedPokemon, setSelectedPokemon] = useState({
     name: '',
     image: '',
@@ -44,21 +37,7 @@ function App() {
     idAuthor: 1
   });
 
-  const styleModal = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-  };
-
-  const isObjectEmpty = (objectName) => {
-    return Object.keys(objectName).length === 0 && objectName.constructor === Object;
-  }
+  // Loading data from API
 
   useEffect(() => {
     axios
@@ -75,6 +54,7 @@ function App() {
       });
   }, [pokemonsData]);
 
+  // Handlers and CRUD methods
   
   const openForm = () => {
     setShowForm(true);
@@ -108,7 +88,6 @@ function App() {
       ...prevState,
       [name]: value
     }))
-    // console.log(selectedPokemon);
   }
 
   const handleChangeSearch = e => {
@@ -148,7 +127,6 @@ function App() {
         .catch((error) => {
           console.log(error);
         });
-        // setPokemonsData([...pokemonsData, { id: newNextId, name: selectedPokemon.name, image: selectedPokemon.image, attack: selectedPokemon.attack, defense: selectedPokemon.defense }]);
       } else {
         alert("Este nombre está en el listado. Por favor, ingrese otro nombre diferente.");
       }
@@ -204,6 +182,8 @@ function App() {
       console.log(error);
     });
   }
+
+  // Render
 
   return (
     <div className="App">
@@ -274,14 +254,14 @@ function App() {
       <br/>
       <div>
       {showForm ? (
-        <CustomForm title="Nuevo Pokemon" onChangeHandler={handleChange} submitCustomHandler={submitPostHandler}  closeCustomForm={closeForm} customMarks={marks} />
+        <CustomForm title="Nuevo Pokemon" onChangeHandler={handleChange} submitCustomHandler={submitPostHandler}  closeCustomForm={closeForm} customMarks={getMarks()} />
       ) : (
         <br/>  
       )}
       </div>
       <div>
       {showEditForm ? (
-        <CustomForm title="Actualizar Pokemon" onChangeHandler={handleChange} submitCustomHandler={submitPutHandler}  closeCustomForm={closeEditForm} customMarks={marks} customSelectedElement={selectedPokemon} />
+        <CustomForm title="Actualizar Pokemon" onChangeHandler={handleChange} submitCustomHandler={submitPutHandler}  closeCustomForm={closeEditForm} customMarks={getMarks()} customSelectedElement={selectedPokemon} />
       ) : (
         <br/>  
       )}
