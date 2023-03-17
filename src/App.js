@@ -6,6 +6,7 @@ import {Add, Close, Edit, Delete, Save, Search, Clear} from '@mui/icons-material
 import Avatar from '@mui/joy/Avatar';
 import Button from '@mui/joy/Button';
 import CustomForm from './components/CustomForm/CustomForm';
+import CustomModal from './components/CustomModal/CustomModal';
 
 const baseUrl = "https://tribu-ti-staffing-desarrollo-afangwbmcrhucqfh.z01.azurefd.net/pkm-msa-evaluation/pokemon";
 // const baseUrl = "pokemons.json";
@@ -307,18 +308,7 @@ function App() {
       )}
       </div>
       <div>
-        <Modal open={showModalDelete} onClose={() => closeModalDelete()}>
-          <Box sx={styleModal}>
-            <div>
-              <p>¿Está seguro que desea eliminar el Pokemon <b>{selectedPokemon && selectedPokemon.name}</b>?</p>
-            </div>
-            <div>
-              <Button color="secondary" onClick={() => submitDeleteHandler()}>Sí</Button>
-              <br/>
-              <Button onClick={() => closeModalDelete()}>No</Button>
-            </div>
-          </Box>  
-        </Modal>
+        <CustomModal customMessage="Está seguro que desea eliminar el Pokemon " showModal={showModalDelete} closeModal={closeModalDelete} submitHandler={submitDeleteHandler} customSelectedElement={selectedPokemon} />
       </div>
     </div>
   );
